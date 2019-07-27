@@ -1,0 +1,68 @@
+﻿<Window x:Class="AutoPointerPrecision.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoPointerPrecision"
+        mc:Ignorable="d"
+        Title="Auto Pointer Precision" Height="450" Width="600"
+        Loaded="Window_Loaded" Closing="Window_Closing">
+    <Window.Resources>
+        <local:IconToBitmapConverter x:Key="icon2bitmap"/>
+    </Window.Resources>
+    <Window.DataContext>
+        <local:MainWindowVM/>
+    </Window.DataContext>
+    <Grid Background="#9fc7d9">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Margin="4" HorizontalAlignment="Center">실행 중인 프로세스들</TextBlock>
+        <TextBlock Grid.Row="0" Grid.Column="2" Margin="4" HorizontalAlignment="Center">정밀도 향상을 끌 프로세스들</TextBlock>
+        <GridSplitter Grid.Row="1" Grid.Column="1" Width="5" Height="Auto" ShowsPreview="True" VerticalAlignment="Stretch" HorizontalAlignment="Center"/>
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding RunningProcesses}" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Width="16" Height="16" Source="{Binding Icon, Converter={StaticResource icon2bitmap}}"/>
+                        <TextBlock Grid.Column="1" Margin="4,0" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"/>
+                        <Button Grid.Column="2" Margin="4,0" Width="40" Content="Add"
+                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.AddTargetCommand}"
+                                CommandParameter="{Binding}">
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <ListBox Grid.Row="1" Grid.Column="2" ItemsSource="{Binding TargetProcesses}" HorizontalContentAlignment="Stretch" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Width="16" Height="16" Source="{Binding Icon, Converter={StaticResource icon2bitmap}}"/>
+                        <TextBlock Grid.Column="1" Margin="4,0" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"/>
+                        <Button Grid.Column="2" Margin="4,0" Width="60" Content="Remove"
+                                Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.RemoveTargetCommand}"
+                                CommandParameter="{Binding}">
+                        </Button>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
