@@ -38,6 +38,9 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>AutoPointerPrecision.EntryPoint</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -64,6 +67,7 @@
     </ApplicationDefinition>
     <Compile Include="BoolToBrushConverter.cs" />
     <Compile Include="CustomCommand.cs" />
+    <Compile Include="EntryPoint.cs" />
     <Compile Include="IconToBitmapConverter.cs" />
     <Compile Include="WinApi.cs" />
     <Page Include="MainWindow.xaml">
