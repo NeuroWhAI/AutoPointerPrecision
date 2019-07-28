@@ -33,7 +33,7 @@ namespace AutoPointerPrecision
 
             m_vm = this.DataContext as MainWindowVM;
 
-            m_tmrUpdate.Interval = TimeSpan.FromSeconds(3.0);
+            m_tmrUpdate.Interval = TimeSpan.FromSeconds(2.0);
             m_tmrUpdate.Tick += TmrUpdate_Tick;
 
             m_tmrCheck.Interval = TimeSpan.FromSeconds(1.0);
@@ -49,7 +49,6 @@ namespace AutoPointerPrecision
         {
             this.Hide();
             m_tray.Visible = true;
-            m_tmrUpdate.Interval = TimeSpan.FromSeconds(60.0);
 
             m_tmrUpdate.Start();
             m_tmrCheck.Start();
@@ -61,7 +60,6 @@ namespace AutoPointerPrecision
             {
                 this.Hide();
                 m_tray.Visible = true;
-                m_tmrUpdate.Interval = TimeSpan.FromSeconds(60.0);
 
                 e.Cancel = true;
             }
@@ -71,7 +69,6 @@ namespace AutoPointerPrecision
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {
-                m_tmrUpdate.Interval = TimeSpan.FromSeconds(3.0);
                 m_tray.Visible = false;
                 this.Show();
             }
@@ -83,6 +80,13 @@ namespace AutoPointerPrecision
 
         private async void TmrUpdate_Tick(object sender, EventArgs e)
         {
+            // 백그라운드로 동작 중일 때는 프로세스 목록을 갱신하지 않음.
+            if (m_tray.Visible)
+            {
+                return;
+            }
+
+
             m_tmrUpdate.Stop();
 
             try
