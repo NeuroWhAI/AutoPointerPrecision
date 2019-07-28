@@ -187,7 +187,12 @@ namespace AutoPointerPrecision
 
                     if (string.IsNullOrEmpty(filename))
                     {
-                        result.Add(new ProcessData(proc));
+                        var data = new ProcessData(proc);
+
+                        if (!string.IsNullOrEmpty(data.Name))
+                        {
+                            result.Add(data);
+                        }
                     }
                     else if (processes.ContainsKey(filename))
                     {
@@ -202,7 +207,12 @@ namespace AutoPointerPrecision
 
             foreach (var kv in processes)
             {
-                result.Add(new ProcessData(kv.Value));
+                var data = new ProcessData(kv.Value);
+
+                if (!string.IsNullOrEmpty(data.Name))
+                {
+                    result.Add(data);
+                }
             }
 
             result.Sort((left, right) => left.Name.CompareTo(right.Name));
