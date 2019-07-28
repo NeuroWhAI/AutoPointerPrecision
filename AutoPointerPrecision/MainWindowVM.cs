@@ -76,6 +76,12 @@ namespace AutoPointerPrecision
             await Task.Yield();
 
 
+            foreach (var targetData in TargetProcesses)
+            {
+                targetData.Targeted = false;
+            }
+
+
             var foreWin = WinApi.GetForegroundWindow();
             WinApi.GetWindowThreadProcessId(foreWin, out uint foreProcId);
 
@@ -98,6 +104,7 @@ namespace AutoPointerPrecision
                             || ProcessUtil.GetFileName(proc) == targetData.FileName)
                         {
                             targeted = true;
+                            targetData.Targeted = true;
                             break;
                         }
                     }
@@ -123,6 +130,7 @@ namespace AutoPointerPrecision
                     }
                 }
             }
+
 
             // Get current settings.
             var mouseParam = new WinApi.MouseParam();

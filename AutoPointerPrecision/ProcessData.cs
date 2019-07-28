@@ -5,12 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using System.IO;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace AutoPointerPrecision
 {
     using Icon = System.Drawing.Icon;
 
-    public class ProcessData : IDisposable
+    public class ProcessData : IDisposable, INotifyPropertyChanged
     {
         ~ProcessData()
         {
@@ -43,10 +45,34 @@ namespace AutoPointerPrecision
             }
         }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        private void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
+        }
+
         public Icon Icon { get; private set; }
         public string Name { get; private set; }
         public string FileName { get; private set; }
         public string DisplayName { get; private set; }
+
+        private bool _Targeted = false;
+        public bool Targeted
+        {
+            get => _Targeted;
+            set
+            {
+                if (Targeted != value)
+                {
+                    _Targeted = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         public bool Disposed { get; private set; } = false;
 

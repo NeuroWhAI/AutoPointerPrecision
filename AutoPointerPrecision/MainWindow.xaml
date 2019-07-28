@@ -9,6 +9,8 @@
         Loaded="Window_Loaded" Closing="Window_Closing">
     <Window.Resources>
         <local:IconToBitmapConverter x:Key="icon2bitmap"/>
+        <local:BoolToBrushConverter x:Key="bool2brush"/>
+        <SolidColorBrush x:Key="targetColor" Color="YellowGreen"/>
     </Window.Resources>
     <Window.DataContext>
         <local:MainWindowVM/>
@@ -55,7 +57,8 @@
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Width="16" Height="16" Source="{Binding Icon, Converter={StaticResource icon2bitmap}}"/>
-                        <TextBlock Grid.Column="1" Margin="4,0" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"/>
+                        <TextBlock Grid.Column="1" Margin="4,0" Text="{Binding DisplayName}" TextTrimming="CharacterEllipsis"
+                                   Background="{Binding Targeted, Converter={StaticResource bool2brush}, ConverterParameter={StaticResource targetColor}}"/>
                         <Button Grid.Column="2" Margin="4,0" Width="60" Content="Remove"
                                 Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, Path=DataContext.RemoveTargetCommand}"
                                 CommandParameter="{Binding}">
