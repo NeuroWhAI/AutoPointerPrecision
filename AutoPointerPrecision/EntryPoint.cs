@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Windows;
+using System.Diagnostics;
 
 namespace AutoPointerPrecision
 {
@@ -16,6 +17,16 @@ namespace AutoPointerPrecision
             try
             {
                 Directory.SetCurrentDirectory(AppDomain.CurrentDomain.BaseDirectory);
+
+                if (UpdateManager.CheckUpdate())
+                {
+                    if (MessageBox.Show("업데이트가 있습니다.\n다운로드 페이지를 띄우고 종료하시겠습니까?", "Auto Pointer Precision",
+                        MessageBoxButton.YesNo, MessageBoxImage.Information) == MessageBoxResult.Yes)
+                    {
+                        Process.Start("https://neurowhai.tistory.com/361");
+                        return;
+                    }
+                }
 
                 var app = new App();
                 app.InitializeComponent();

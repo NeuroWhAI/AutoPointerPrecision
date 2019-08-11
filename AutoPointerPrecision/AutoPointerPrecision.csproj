@@ -69,6 +69,7 @@
     <Compile Include="CustomCommand.cs" />
     <Compile Include="EntryPoint.cs" />
     <Compile Include="IconToBitmapConverter.cs" />
+    <Compile Include="UpdateManager.cs" />
     <Compile Include="WinApi.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
