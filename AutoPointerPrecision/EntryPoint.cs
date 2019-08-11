@@ -37,8 +37,10 @@ namespace AutoPointerPrecision
                 try
                 {
                     // Register as a startup program.
-                    RegistryKey reg = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true);
-                    reg.SetValue("AutoPointerPrecision_NeuroWhAI", Assembly.GetExecutingAssembly().Location);
+                    using (var reg = Registry.CurrentUser.OpenSubKey("Software\\Microsoft\\Windows\\CurrentVersion\\Run", true))
+                    {
+                        reg.SetValue("AutoPointerPrecision_NeuroWhAI", Assembly.GetExecutingAssembly().Location);
+                    }
                 }
                 catch (SecurityException e)
                 {
